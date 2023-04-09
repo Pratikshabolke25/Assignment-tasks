@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Task - 01</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        font-family: sans-serif;
+      }
+      .chartMenu {
+        width: 100vw;
+        height: 40px;
+        background: #1A1A1A;
+        color: rgba(54, 162, 235, 1);
+      }
+      .chartMenu p {
+        padding: 10px;
+        font-size: 20px;
+      }
+      .chartCard {
+        width: 100vw;
+        height: calc(100vh - 40px);
+        background: rgba(54, 162, 235, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .chartBox {
+        width: 500px;
+        padding: 20px;
+        border-radius: 20px;
+        border: solid 3px rgba(54, 162, 235, 1);
+        background: white;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="chartMenu">
+      <p>Task-01 (Chart JS <span id="chartVersion"></span>)</p>
+    </div>
+    <div class="chartCard">
+      <div class="chartBox"><button id="randomizeButton" style="background-color: darkkhaki;" >Randomize</button>
+        <canvas id="myChart"></canvas>
+      </div>
+    </div>
+
+    <div class="chartCard">
+    <div class="chartBox"><button id="randomizeButton1"style="background-color: darkkhaki;">Randomize</button>
+        <canvas id="linechart"></canvas>
+      </div>
+    </div>
+
+    <div class="chartCard">
+      <div class="chartBox"><button id="randomizeButton2"style="background-color: darkkhaki;">Randomize</button>
+          <canvas id="piechart"></canvas>
+        </div>
+      </div>
+
+
+    
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js">
+        
+    </script>
+    <script>
+    // setup
+    var olddata=[18, 12, 6, 9, 12, 3, 9];
+    var newdata=[11, 13, 15, 20, 14, 13, 7]; 
+    const data = {
+      labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+      datasets: [{
+        label: 'Sales in 1st week',
+        backgroundColor: 'rgba(11,156,49,0.4)',
+        data: olddata,
+      },
+      {
+        label: 'Sales in 2nd week',
+        backgroundColor: 'rgba(255, 159, 64, 0.6)',
+        data: newdata,
+      }
+        ],
+        borderWidth: 1
+      
+    };
+
+    // config 
+    const config = {
+      type: 'bar',
+      data,
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    };
+
+    // render init block
+    const myChart = new Chart(
+      document.getElementById('myChart'),
+      config
+    );
+        //config line
+    const config2 = {
+      type: 'line',
+      data,
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    };
+
+    // render linechart init block
+    const linechart = new Chart(
+      document.getElementById('linechart'),
+      config2
+    );
+
+    //pie chart
+    const datapie = {
+      labels: ['Mon', 'Tue', 'Wed'],
+      datasets: [{
+        label: 'Sales',
+        data:[16,7,22],
+        backgroundColor: [
+          'rgba(255, 26, 104, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+         ],
+         borderColor: [
+          'rgba(255, 26, 104, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+      ],
+      }
+       ],
+        borderWidth: 1
+    };
+      //config pie
+      const configpie ={
+        type: 'pie',
+      data:datapie,
+      options: {}
+
+      };
+    
+      //render or init of piechart
+      const piechart = new Chart(
+        document.getElementById('piechart'),
+        configpie
+      );
+        //randomize button'''''
+              function randomizeChart() {
+          const chart = Chart.getChart('myChart'); 
+          const dataset = chart.data.datasets[0];
+          
+          // generate random data with the same length as the original data
+          const newData = dataset.data.map(() => Math.random() * 100);
+          
+          // update the chart data and redraw it
+          dataset.data = newData;
+          chart.update();
+        }
+
+
+        function randomizeChart1() {
+           chart1 = Chart.getChart('linechart'); 
+          const dataset = chart1.data.datasets[0];
+          
+          // generate random data with the same length as the original data
+          const newData = dataset.data.map(() => Math.random() * 100);
+          
+          // update the chart data and redraw it
+          dataset.data = newData;
+          chart1.update();
+        }
+
+
+        function randomizeChart2() {
+          chart2 = Chart.getChart('piechart'); 
+          const dataset  = chart2.data.datasets[0];
+          
+          // generate random data with the same length as the original data
+          const newData = dataset.data.map(() => Math.random() * 200);
+          
+          // update the chart data and redraw it
+          dataset.data = newData;
+          chart2.update();
+        }
+
+       
+      const randomizeButton = document.getElementById('randomizeButton');
+      randomizeButton.addEventListener('click', randomizeChart);
+      const randomizeButton1 = document.getElementById('randomizeButton1');
+      randomizeButton1.addEventListener('click', randomizeChart1);
+      const randomizeButton2 = document.getElementById('randomizeButton2');
+      randomizeButton2.addEventListener('click', randomizeChart2);
+
+
+    // Instantly assign Chart.js version
+    const chartVersion = document.getElementById('chartVersion');
+    chartVersion.innerText = Chart.version;
+
+    //@ Pratiksha
+    </script>
+  </body>
+</html>

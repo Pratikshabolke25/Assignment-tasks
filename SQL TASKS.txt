@@ -1,0 +1,29 @@
+-- QUERY 1
+-- C PRATIKSHA
+
+SELECT A.scheme_code, isin_div_payout_isin_growth,isin_div_reinvestment,scheme_name,net_asset_value, date
+FROM historical_nav AS A
+INNER JOIN 
+(SELECT scheme_code, MAX(date) AS latest_date
+FROM historical_nav
+GROUP BY scheme_code) AS B ON (A.scheme_code= B.scheme_code) AND (A.date= B.latest_date)
+ORDER BY A.scheme_name ASC
+
+
+
+
+
+
+-- QUERY 2
+-- C PRATIKSHA
+
+SELECT scheme_code, scheme_name, SUM(net_asset_value) AS nav
+FROM historical_nav as X
+GROUP BY scheme_name 
+HAVING nav > 2000;
+
+
+
+
+
+
